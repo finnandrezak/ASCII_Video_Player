@@ -2,18 +2,38 @@ import nu.pattern.OpenCV;
 import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
 
-public void main (String[] args){
-    OpenCV.loadLocally();
+public class Main {
+    public static void main(String[] args) {
+        OpenCV.loadShared();
+        VideoSource source = new VideoSource("Big_Buck_Bunny.mp4");
+        AsciiConverter converter = new AsciiConverter(1000, 0.35);
+        TerminalRenderer renderer = new TerminalRenderer();
 
-    Mat img = Imgcodecs.imread("BMW.svg.png");
+        Mat frame = new Mat();
+        double fps = source.getFPS();
+        long frameDuration = (long) (1000/fps);
 
-    if(img.empty()){
-        System.out.println("picture not found, check the file path");
-    }else{
-        AsciiConverter converter = new AsciiConverter(80, 0.35);
+        while(source.isOpen() && source.getNextFrame(frame)){
+            double starttime = System.currentTimeMillis();
 
-        String result = converter.convert(img);
-        System.out.println(result);
+            String img = converter.convert(frame);
+            renderer.render(img);
+
+            double endtime = System.currentTimeMillis();
+            long difference = (long) (endtime - starttime);
+
+            if( difference < frameDuration) {
+                try {
+                    Thread.sleep(frameDuration - difference);
+                } catch (InterruptedException e) {
+                    System.out.print("Error: Interrupted during streaming");
+                }
+            }
+        }
+
+        renderer.clear();
+        source.close();
+
     }
 }
 

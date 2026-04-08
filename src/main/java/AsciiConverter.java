@@ -3,7 +3,7 @@ import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
 public class AsciiConverter {
-    private static final String SCALE = ".:-=+*#%@";
+    private static final String SCALE = ".'`\\\"^,:;Il!i><~+_-?][}{1)(|\\\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhaoo*#&8%B@$";
     private int targetWidth;
     private double aspectRatioCorrection;
     private Mat grayscaleMat = new Mat();

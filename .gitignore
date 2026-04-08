@@ -12,6 +12,11 @@ target/
 *.iws
 *.iml
 *.ipr
+ .idea/shelf/
+ .idea/workspace.xml
+ .idea/httpRequests/
+ .idea/dataSources/
+ .idea/dataSources.local.xml
 
 ### Eclipse ###
 .apt_generated
@@ -37,3 +42,5 @@ build/
 
 ### Mac OS ###
 .DS_Store
+BMW.svg.png
+bigbuckbunny.*
